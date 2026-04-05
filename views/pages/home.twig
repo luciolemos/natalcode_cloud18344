@@ -83,7 +83,18 @@
            reutilizando os depoimentos cadastrados na seção #depoimentos. #}
         <div class="hero-proof glass mt-3 js-quick-proof">
           <div class="proof-avatars" aria-hidden="true">
-            <img id="quickProofAvatar" src="{{ base_url }}/assets/img/avatars/face2_620_620.webp" alt="Cliente atendido" width="620" height="620" loading="lazy" decoding="async" fetchpriority="low">
+            <img
+              id="quickProofAvatar"
+              src="{{ base_url }}/assets/img/avatars/face2_96.webp"
+              srcset="{{ base_url }}/assets/img/avatars/face2_96.webp 96w, {{ base_url }}/assets/img/avatars/face2_160.webp 160w"
+              sizes="56px"
+              alt="Cliente atendido"
+              width="56"
+              height="56"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="low"
+            >
           </div>
           <div class="proof-copy">
             <strong>Depoimento de cliente</strong>
@@ -315,27 +326,29 @@
       {% set testimonials = testimonials ?? default_testimonials %}
       {# Mapa de avatares usados na prova social.
          O índice do loop define qual imagem exibir em cada card. #}
-      {% set testimonial_avatars = [
-        '/assets/img/avatars/face1_620_620.webp',
-        '/assets/img/avatars/face9_620_620.webp',
-        '/assets/img/avatars/face11_620_620.webp',
+      {% set testimonial_avatar_keys = [
+        'face1',
+        'face9',
+        'face11',
       ] %}
 
       {# Renderização dos depoimentos.
          O avatar é resolvido com módulo (%) para evitar índice fora do array. #}
       {% for t in testimonials %}
-      {% set avatar_src = testimonial_avatars|length > 0 ? testimonial_avatars[loop.index0 % (testimonial_avatars|length)] : '/assets/img/avatars/face2_620_620.webp' %}
+      {% set avatar_key = testimonial_avatar_keys|length > 0 ? testimonial_avatar_keys[loop.index0 % (testimonial_avatar_keys|length)] : 'face2' %}
       <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 90 }}">
         <div class="quote-card hover-lift glass card-variant-proof h-100 p-4">
           <div class="d-flex justify-content-center mb-3">
             <img
-              src="{{ base_url }}{{ avatar_src }}"
+              src="{{ base_url }}/assets/img/avatars/{{ avatar_key }}_96.webp"
+              srcset="{{ base_url }}/assets/img/avatars/{{ avatar_key }}_96.webp 96w, {{ base_url }}/assets/img/avatars/{{ avatar_key }}_160.webp 160w"
+              sizes="64px"
               alt="Foto de {{ t.name }}"
               class="avatar"
               loading="lazy"
               decoding="async"
-              width="620"
-              height="620"
+              width="64"
+              height="64"
             >
           </div>
           <div class="quote-stars mb-2" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>

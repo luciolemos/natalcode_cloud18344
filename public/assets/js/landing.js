@@ -75,15 +75,6 @@
   const y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
 
-  // Page loader (fail-safe)
-  const hideLoader = () => {
-    const loader = document.getElementById("pageLoader");
-    if (loader) loader.classList.add("loaded");
-  };
-  window.addEventListener("load", hideLoader);
-  document.addEventListener("DOMContentLoaded", hideLoader);
-  setTimeout(hideLoader, 2000);
-
   // Floating buttons (back-to-top + WhatsApp)
   const btn = document.getElementById("backToTop");
   const whatsappFloat = document.querySelector(".whatsapp-float");
@@ -445,6 +436,7 @@
         const meta = card.querySelector(".small.text-secondary-emphasis");
         return {
           avatarSrc: img ? img.getAttribute("src") || "" : "",
+          avatarSrcSet: img ? img.getAttribute("srcset") || "" : "",
           avatarAlt: img ? img.getAttribute("alt") || "Cliente da NatalCode" : "Cliente da NatalCode",
           quote: text ? (text.textContent || "").trim() : "",
           who: name ? (name.textContent || "").trim() : "",
@@ -486,6 +478,12 @@
       if (!entry || !quickProofText || !quickProofMeta) return;
       if (quickProofAvatar && entry.avatarSrc) {
         quickProofAvatar.setAttribute("src", entry.avatarSrc);
+        if (entry.avatarSrcSet) {
+          quickProofAvatar.setAttribute("srcset", entry.avatarSrcSet);
+        } else {
+          quickProofAvatar.removeAttribute("srcset");
+        }
+        quickProofAvatar.setAttribute("sizes", "56px");
         quickProofAvatar.setAttribute("alt", entry.avatarAlt || "Cliente da NatalCode");
       }
       quickProofText.textContent = `"${entry.quote.replace(/^\"|\"$/g, "")}"`;

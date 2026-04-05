@@ -3,13 +3,13 @@
     <a class="navbar-brand d-flex align-items-center gap-2" href="{{ base_url ?? '/' }}">
       <img
         src="{{ base_url ?? '' }}/assets/img/brands/white.png"
-        alt="{{ app_name ?? 'Labs' }} (tema escuro)"
-        class="navbar-logo logo-dark"
-      >
-      <img
-        src="{{ base_url ?? '' }}/assets/img/brands/black.png"
-        alt="{{ app_name ?? 'Labs' }} (tema claro)"
-        class="navbar-logo logo-light"
+        alt="{{ app_name ?? 'Labs' }}"
+        class="navbar-logo"
+        width="38"
+        height="38"
+        loading="eager"
+        decoding="async"
+        fetchpriority="low"
       >
       <span class="fw-semibold">{{ app_name ?? 'Labs' }}</span>
 

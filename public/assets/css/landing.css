@@ -524,16 +524,8 @@ button:active {
   object-fit: contain;
 }
 
-.logo-light {
-  display: none;
-}
-
-html[data-theme="light"] .logo-dark {
-  display: none;
-}
-
-html[data-theme="light"] .logo-light {
-  display: inline-block;
+html[data-theme="light"] .navbar-logo {
+  filter: brightness(0) saturate(100%);
 }
 
 .hero {

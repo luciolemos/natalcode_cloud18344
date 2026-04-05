@@ -25,19 +25,3 @@ body {
 .text-secondary-emphasis {
   color: var(--muted) !important;
 }
-
-/* loader */
-.page-loader {
-  position: fixed;
-  inset: 0;
-  background: #0b0f19;
-  display: grid;
-  place-items: center;
-  z-index: 9999;
-  transition: opacity .3s;
-}
-
-.page-loader.loaded {
-  opacity: 0;
-  pointer-events: none;
-}
