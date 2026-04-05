@@ -42,22 +42,22 @@
   <div class="container position-relative">
     <div class="row align-items-center g-4 g-lg-5">
       <div class="col-lg-6">
-        <div class="hero-badge mb-3" data-aos="fade-up" data-aos-delay="0">
+        <div class="hero-badge mb-3">
           <i class="bi bi-stars"></i>
           <span>{{ hero_badge ?? (is_growth ? 'Versão Growth: copy orientada a lead e fechamento' : 'Arquitetura enxuta, visual premium e foco em conversão') }}</span>
         </div>
 
-        <h1 class="display-5 fw-bold lh-sm mb-3" data-aos="fade-up" data-aos-delay="80">
+        <h1 class="display-5 fw-bold lh-sm mb-3">
           {{ hero_title_prefix ?? (is_growth ? 'Lance sua landing em' : 'Sua plataforma') }}
           <span class="text-gradient">{{ hero_title_highlight ?? (is_growth ? '24h' : 'pronta para escalar') }}</span>
           {{ hero_title_suffix ?? (is_growth ? 'e transforme tráfego em leads qualificados.' : 'com alta performance e linguagem de produto.') }}
         </h1>
 
-        <p class="lead text-secondary-emphasis mb-4" data-aos="fade-up" data-aos-delay="140">
+        <p class="lead text-secondary-emphasis mb-4">
           {{ hero_lead ?? (is_growth ? 'Base pronta em PHP 8.3 + Twig, com design premium, CTA forte e estrutura para escalar sem retrabalho.' : 'Interface com identidade SaaS, stack moderna (PHP 8.3+, Twig e Bootstrap) e blocos prontos para proposta de valor, prova social e CTA.') }}
         </p>
 
-        <div class="d-flex flex-column flex-sm-row gap-2 gap-sm-3" data-aos="fade-up" data-aos-delay="220">
+        <div class="d-flex flex-column flex-sm-row gap-2 gap-sm-3">
           <a class="btn btn-primary btn-lg px-4 cta-track" href="#form-orcamento" data-cta-id="hero_primary">
             {{ cta_primary ?? (is_growth ? 'Quero minha landing agora' : 'Solicitar versão') }} <i class="bi bi-arrow-right-short"></i>
           </a>
@@ -66,7 +66,7 @@
           </a>
         </div>
 
-        <div class="d-flex flex-wrap gap-3 mt-4 small text-secondary-emphasis" data-aos="fade-up" data-aos-delay="300">
+        <div class="d-flex flex-wrap gap-3 mt-4 small text-secondary-emphasis">
           <div class="d-flex align-items-center gap-2">
             <i class="bi bi-shield-check"></i><span>Segurança desde a base</span>
           </div>
@@ -81,7 +81,7 @@
         {# Prova social compacta na hero.
            O conteúdo é atualizado via JS (quick-proof randomizer) a cada carregamento,
            reutilizando os depoimentos cadastrados na seção #depoimentos. #}
-        <div class="hero-proof glass mt-3 js-quick-proof" data-aos="fade-up" data-aos-delay="360">
+        <div class="hero-proof glass mt-3 js-quick-proof">
           <div class="proof-avatars" aria-hidden="true">
             <img id="quickProofAvatar" src="{{ base_url }}/assets/img/avatars/face2_620_620.webp" alt="Cliente atendido" width="620" height="620" loading="lazy" decoding="async" fetchpriority="low">
           </div>
@@ -94,7 +94,7 @@
       </div>
 
       <div class="col-lg-6">
-        <div class="p-0 hero-media" data-aos="zoom-in" data-aos-delay="200">
+        <div class="p-0 hero-media">
           <picture>
             <source
               type="image/webp"
@@ -108,7 +108,7 @@
               width="640"
               height="405"
               loading="eager"
-              decoding="async"
+              decoding="sync"
               fetchpriority="high"
             >
           </picture>
@@ -117,15 +117,15 @@
         {# Bloco de métricas de percepção.
            Não é telemetria em tempo real; são indicadores de posicionamento técnico/comercial. #}
         <div class="hero-metrics mt-3">
-          <div class="metric glass" data-aos="fade-up" data-aos-delay="350">
+          <div class="metric glass">
             <div class="metric-kpi">290px+</div>
             <div class="metric-label">Mobile-first real</div>
           </div>
-          <div class="metric glass" data-aos="fade-up" data-aos-delay="420">
+          <div class="metric glass">
             <div class="metric-kpi">&lt; 2s</div>
             <div class="metric-label">LCP otimizado*</div>
           </div>
-          <div class="metric glass" data-aos="fade-up" data-aos-delay="490">
+          <div class="metric glass">
             <div class="metric-kpi">AOS</div>
             <div class="metric-label">Motion elegante</div>
           </div>

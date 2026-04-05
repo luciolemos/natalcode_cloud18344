@@ -161,13 +161,26 @@ sudo apache2ctl -t
 sudo systemctl reload apache2
 ```
 
-### 6. Validar apos o deploy
+### 6. Pos-update obrigatorio (cache Twig + permissoes)
+Em `APP_ENV="production"`, o Twig roda com cache compilado. Após update de código, limpe o cache compilado para evitar HTML antigo.
+
+```bash
+bash scripts/deploy-post-update.sh --project-root "/var/www/natalcode" --web-user "www-data" --web-group "www-data"
+```
+
+### 7. Validar apos o deploy
 Checklist minimo:
 - `https://srv798468.hstgr.cloud/natalcode/` abre corretamente
 - assets carregam sem `404`
 - `POST /contato` responde corretamente
 - redirects preservam o prefixo `/natalcode`
 - `storage/cache/twig` e `storage/logs/` recebem escrita
+
+Smoke recomendado no host final:
+
+```bash
+bash scripts/smoke-contact.sh --url "https://srv798468.hstgr.cloud/natalcode/"
+```
 
 ## Checklist de producao
 Antes de considerar o deploy concluido, valide:
@@ -386,6 +399,7 @@ Comandos uteis:
 ```bash
 composer install --no-dev --optimize-autoloader
 composer test
+bash scripts/deploy-post-update.sh --project-root "/var/www/natalcode" --web-user "www-data" --web-group "www-data"
 sudo apache2ctl -t
 sudo systemctl reload apache2
 ```

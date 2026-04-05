@@ -6,9 +6,14 @@ on:
       - "**"
   pull_request:
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,6 +31,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
+        timeout-minutes: 8
         run: composer install --no-interaction --prefer-dist
 
       - name: Prepare env for local CI server
@@ -44,26 +50,51 @@ jobs:
           sed -i 's|^SMTP_AUTH=.*$|SMTP_AUTH="false"|' .env
 
       - name: Start SMTP sandbox (Mailpit)
+        timeout-minutes: 2
         run: docker run -d --name natalcloud-mailpit -p 1025:1025 -p 8025:8025 axllent/mailpit:latest
+
+      - name: Wait for Mailpit
+        timeout-minutes: 2
+        run: |
+          timeout 60 bash -c 'until curl -fsS http://127.0.0.1:8025 >/dev/null; do sleep 2; done'
 
       - name: Start local server
         run: |
           php -S 127.0.0.1:8000 -t public >/tmp/natalcloud-php-server.log 2>&1 &
           echo $! > /tmp/natalcloud-php-server.pid
 
+      - name: Wait for local server
+        timeout-minutes: 2
+        run: |
+          timeout 60 bash -c 'until curl -fsS http://127.0.0.1:8000/ >/dev/null; do sleep 2; done'
+
       - name: Make scripts executable
         run: chmod +x scripts/run-tests.sh scripts/quality-gate.sh scripts/lighthouse-ci.sh scripts/smoke-e2e.sh
 
       - name: Run quality gate
+        timeout-minutes: 6
         run: bash scripts/quality-gate.sh
 
       - name: Run test suite
+        timeout-minutes: 10
         run: bash scripts/run-tests.sh --url "http://127.0.0.1:8000/" --default-palette blue --with-contact-success
 
+      - name: Select Lighthouse profile
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "push" && "${GITHUB_REF_NAME}" == "main" ]]; then
+            PROFILE="strict"
+          else
+            PROFILE="balanced"
+          fi
+          echo "LIGHTHOUSE_PROFILE=${PROFILE}" >> "$GITHUB_ENV"
+          echo "Using profile: ${PROFILE}"
+
       - name: Run Lighthouse budget
-        run: bash scripts/lighthouse-ci.sh strict
+        timeout-minutes: 12
+        run: bash scripts/lighthouse-ci.sh "${LIGHTHOUSE_PROFILE}"
 
       - name: Run browser smoke e2e
+        timeout-minutes: 12
         run: bash scripts/smoke-e2e.sh "http://127.0.0.1:8000/"
 
       - name: Stop local server

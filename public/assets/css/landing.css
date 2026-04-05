@@ -599,7 +599,14 @@ html[data-theme="light"] .logo-light {
   background: linear-gradient(180deg, rgba(7, 19, 40, 0.82), rgba(6, 15, 32, 0.9));
   border: 1px solid var(--stroke-soft);
   border-radius: var(--r1);
+  box-shadow: 0 12px 28px rgba(0, 8, 20, 0.34);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html.fx-ready .glass {
   box-shadow: var(--shadow-lg);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
 
@@ -628,6 +635,10 @@ html[data-theme="light"] .logo-light {
 .hero-media img {
   border-radius: var(--r1);
   border: 1px solid var(--stroke-soft);
+  box-shadow: 0 12px 28px rgba(0, 8, 20, 0.34);
+}
+
+html.fx-ready .hero-media img {
   box-shadow: var(--shadow-lg);
 }
 
